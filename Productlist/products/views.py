@@ -35,6 +35,7 @@ class ProductDetail(APIView):
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
+
 @login_required
 def product_list(request):
     products = Product.objects.all()
@@ -61,8 +62,8 @@ def register_view(request):
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'product_list.html'  
-    context_object_name = 'products' 
+    template_name = 'product_list.html'  # Specify your template
+    context_object_name = 'products'  # Name for the list in the template
 
 
 
