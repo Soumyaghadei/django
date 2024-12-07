@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #212529;
+        }
+
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-start; /* Align items to the left */
+            align-items: center;
+        }
+        
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        header a:hover {
+            color: #cce7ff;
+        }
+
+        h1 {
+            text-align: ;
+            color: white; /* Set text color to white */
+            margin: 0;
+            flex: 1; /* Allow the title to take up available space */
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info p {
+            margin: 0 10px;
+        }
+
+        .user-info form {
+            display: inline;
+        }
+
+        .user-info button {
+            padding: 10px 15px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .user-info button:hover {
+            background-color: #c82333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        li {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        li:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        li h2 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #343a40;
+        }
+
+        li p {
+            font-size: 16px;
+            color: #6c757d;
+            margin: 5px 0;
+        }
+
+        li p.price {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        button.add-to-cart {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        button.add-to-cart:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Product List</h1>
+
+        <div class="user-info">
+            {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}!</p>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            {% else %}
+                <p><a href="{% url 'login' %}">Login</a></p>
+            {% endif %}
+        </div>
+    </header>
+
+    <ul>
+        {% for product in products %}
+        <a href="{% url 'product-detail' product.id %}">
+            <li>
+                <h2>{{ product.name }}</h2>
+                <p>{{ product.description }}</p>
+                <p class="price">Price: ₹{{ product.price }}</p>
+            </a>
+                <button class="add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
+                
+            </li>
+        
+        {% endfor %}
+    </ul>
+
+    <script>
+        // JavaScript for "Add to Cart" functionality
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productId = button.getAttribute('data-product-id');
+                alert(`Product ID ${productId} added to cart!`);
+                
+                // Implement AJAX request for adding to cart
+                // fetch(`/cart/add/${productId}/`, {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ id: productId })
+                // }).then(response => response.json())
+                // .then(data => console.log(data))
+                // .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+</body>
+</html>
