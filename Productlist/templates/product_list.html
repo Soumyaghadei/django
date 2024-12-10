@@ -99,7 +99,6 @@
             font-size: 18px;
             margin: 10px 0;
             color: #343a40;
-            
         }
 
         li p {
@@ -149,16 +148,12 @@
 
     <ul>
         {% for product in products %}
-        <a href="{% url 'product-detail' product.id %}">
             <li>
                 <h2>{{ product.name }}</h2>
                 <p>{{ product.description }}</p>
                 <p class="price">Price: ₹{{ product.price }}</p>
-            </a>
                 <button class="add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
-                
             </li>
-        
         {% endfor %}
     </ul>
 

@@ -2,14 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Product
 from .serializers import ProductSerializer
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.views.generic.list import ListView
-
 
 class ProductListView(ListView):
     model = Product
@@ -21,18 +19,6 @@ class ProductListView(APIView):
     def get(self, request):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
-
-
-class ProductList(ListView):
-    model = Product
-    template_name = "product_list.html"
-
-
-class ProductDetail(APIView):
-    def get(self, request, pk):
-        product = get_object_or_404(Product, pk=pk)
-        serializer = ProductSerializer(product)
         return Response(serializer.data)
 
 
