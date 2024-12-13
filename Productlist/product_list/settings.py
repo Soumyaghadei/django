@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'products',
+    'rest_framework_simplejwt',
     
 ]
 
@@ -109,19 +110,15 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
-
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Correct JWT authentication
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.permissions.IsAuthenticated',  # Ensure this is set to check for authentication
     ],
 }
 
