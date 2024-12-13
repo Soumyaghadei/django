@@ -30,6 +30,14 @@ class LoginView(APIView):
         return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Optionally, you can blacklist the token or inform the user to remove it from the client-side.
+        return Response({"message": "Successfully logged out."}, status=200)
+
+
 
 class ProductListView(APIView):
     permission_classes = [IsAuthenticated]
@@ -47,3 +55,5 @@ class ProductListView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
